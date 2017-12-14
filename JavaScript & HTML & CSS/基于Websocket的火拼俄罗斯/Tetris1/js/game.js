@@ -79,7 +79,7 @@ var Game = function() {
         } else {
             return true;
         }
-    }
+    };
     /*检测数据是否合法*/
     var isValid = function(pos, data) {
         for (var i = 0; i < data.length; i++) {
@@ -92,7 +92,7 @@ var Game = function() {
             }
         }
         return true;
-    }
+    };
     /*清除数据*/
     var clearData = function() {
         for (var i = 0; i < cur.data.length; i++) {
@@ -102,7 +102,7 @@ var Game = function() {
                 }
             }
         }
-    }
+    };
     /*设置数据*/
     var setData = function() {
         for (var i = 0; i < cur.data.length; i++) {
@@ -112,7 +112,7 @@ var Game = function() {
                 }
             }
         }
-    }
+    };
     /*下移*/
     var down = function() {
         if (cur.canDown(isValid)) {
@@ -124,7 +124,7 @@ var Game = function() {
         } else {
             return false;
         }
-    }
+    };
     /*左移*/
     var left = function() {
         if (cur.canLeft(isValid)) {
@@ -133,7 +133,7 @@ var Game = function() {
             setData();
             refreshDiv(gameData, gameDivs);
         }
-    }
+    };
     /*右移*/
     var right = function() {
         if (cur.canRight(isValid)) {
@@ -142,7 +142,7 @@ var Game = function() {
             setData();
             refreshDiv(gameData, gameDivs);
         }
-    }
+    };
     /*旋转*/
     var rotate = function() {
         if (cur.canRotate(isValid)) {
@@ -151,7 +151,7 @@ var Game = function() {
             setData();
             refreshDiv(gameData, gameDivs);
         }
-    }
+    };
     /*方块移动到底部，给他固定*/
     var fixed = function() {
         for (var i = 0; i < cur.data.length; i++) {
@@ -164,7 +164,7 @@ var Game = function() {
             }
         }
         refreshDiv(gameData, gameDivs);
-    }
+    };
     /*初始化*/
     var init = function(doms) {
         gameDiv = doms.gameDiv;
@@ -176,7 +176,7 @@ var Game = function() {
         setData();
         refreshDiv(gameData, gameDivs);
         refreshDiv(next.data, nextDivs);
-    }
+    };
     /*使用下一个方块*/
     var performNext = function(type, dir) {
         cur = next;
@@ -184,11 +184,41 @@ var Game = function() {
         next = SquareFactory.prototype.make(type, dir);
         refreshDiv(gameData, gameDivs);
         refreshDiv(next.data, nextDivs);
-    }
+    };
     /*消行*/
     var checkClear = function() {
-
-    }
+        for (var i = gameData.length - 1; i >= 0; i--) {
+            var clear = true;
+            for (var j = 0; j < gameData[0].length; j++) {
+                if (gameData[i][j] != 1) {
+                    clear = false;
+                    break;
+                }
+            }
+            if (clear) {
+                for (var m = i; m > 0; m--) {
+                    for (var n = 0; n < gameData[0].length; n++) {
+                        gameData[m][n] = gameData[m - 1][n];
+                    }
+                }
+                for (var n = 0; n < gameData[0].length; n++) {
+                    gameData[0][n] = 0;
+                }
+                i++;
+            }
+        }
+    };
+    /*判断游戏结束*/
+    var checkGameOver = function() {
+        var gameOver = false;
+        for (var i = 0; i < gameData[0].length; i++) {
+            if (gameData[1][i] == 1) {
+                gameOver = true;
+                break;
+            }
+        }
+        return gameOver;
+    };
     /*导出API*/
     this.init = init;
     this.down = down;
@@ -201,4 +231,5 @@ var Game = function() {
     this.fixed = fixed;
     this.performNext = performNext;
     this.checkClear = checkClear;
-}
+    this.checkGameOver = checkGameOver;
+};

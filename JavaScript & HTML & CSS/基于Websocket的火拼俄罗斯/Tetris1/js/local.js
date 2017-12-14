@@ -18,35 +18,48 @@ var Local = function() {
             } else if (e.keyCode == 32) { //space
                 game.fall();
             }
-        }
-    }
+        };
+    };
     //移动
     var move = function() {
         if (!game.down()) {
             game.fixed();
             game.checkClear();
-            game.performNext(generateType(), generateDir());
+            var gameOver = game.checkGameOver();
+            if (gameOver) {
+                stop();
+            } else {
+                game.performNext(generateType(), generateDir());
+            }
         }
-    }
+    };
     //随机生成一个方块种类
     var generateType = function() {
         return Math.ceil(Math.random() * 7 - 1);
-    }
+    };
     //随机生成一个旋转次数
     var generateDir = function() {
         return Math.ceil(Math.random() * 4 - 1);
-    }
+    };
     // 开始
     var start = function() {
         var doms = {
             nextDiv: document.getElementById('next'),
             gameDiv: document.getElementById('game')
-        }
+        };
         game = new Game();
         game.init(doms);
         bindKeyEvent();
         timer = setInterval(move, INTERVAL);
-    }
+    };
+    // 结束
+    var stop = function() {
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+        document.onkeydown = null;
+    };
     // 导出API
     this.start = start;
-}
+};
