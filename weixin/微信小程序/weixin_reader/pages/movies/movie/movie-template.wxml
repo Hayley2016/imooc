@@ -1,0 +1,9 @@
+<!--stars.wxml-->
+<import src="../stars/stars-template.wxml" />
+<template name="movieTemplate">
+  <view class="movie-container">
+    <image class="movie-img" src="http://img7.doubanio.com/view/movie_poster_cover/lpst/public/p2485983612.webp"></image>
+    <text class="movie-title">战狼2 (2017)</text>
+    <template is="starsTemplate" />
+  </view>
+</template>

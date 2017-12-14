@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <h1>Echo Test</h1>
+    <input type="text" id="sendText">
+    <button id="sendBtn">发送</button>
+    <div id="recv"></div>
+    <script type="text/javascript">
+    var websocket = new WebSocket('ws://localhost:3000/');
+    websocket.onopen = function() {
+        console.log('open');
+        document.getElementById('recv').innerHTML = 'open';
+    }
+    websocket.onclose = function() {
+        console.log('close');
+        document.getElementById('recv').innerHTML = 'close';
+    }
+    websocket.onmessage = function(e) {
+        console.log(e.data);
+        document.getElementById('recv').innerHTML = e.data;
+    }
+    document.getElementById('sendBtn').onclick = function() {
+        var text = document.getElementById('sendText').value;
+        websocket.send(text);
+    }
+    </script>
+</body>
+
+</html>
