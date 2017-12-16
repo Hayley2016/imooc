@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>图片华滑动组件</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="apple-touch-fullscreen" content="YES">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style type="text/css">
+    html,
+    body {
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+        background-color: #333;
+        height: 100%;
+    }
+
+    #canvas {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    ul,
+    li {
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+        list-style: none;
+        width: 100%;
+        height: 100%;
+    }
+
+    li {
+        position: absolute;
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
+    }
+
+    img {}
+    </style>
+</head>
+
+<body>
+    <div id="canvas">
+        <!-- <ul>
+            <li style="transform:translate3d(0px,0,0)">
+                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513420023140&di=d9ab991e8d14a8c2e4808010e12a0022&imgtype=0&src=http%3A%2F%2Fwww.pp3.cn%2Fuploads%2F201508%2F2015081613.jpg">
+            </li>
+            <li style="transform:translate3d(320px,0,0)">
+                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513420023140&di=55d3dd5e419ddf7e8501e9c210f47bd2&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201205%2F16%2F20120516125742_kC34T.jpeg">
+            </li>
+        </ul> -->
+    </div>
+    <script type="text/javascript">
+    var list = [{
+            width: 1680,
+            height: 1200,
+            img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513420023140&di=d9ab991e8d14a8c2e4808010e12a0022&imgtype=0&src=http%3A%2F%2Fwww.pp3.cn%2Fuploads%2F201508%2F2015081613.jpg'
+        }, {
+            width: 700,
+            height: 1243,
+            img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513423006575&di=791fb9b8e3a6f1d68b288b29b28bc2d4&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201406%2F23%2F20140623003759_AhnYr.thumb.700_0.jpeg'
+        }, {
+            width: 960,
+            height: 800,
+            img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513423050263&di=08d683edb209b8181379fedde03988f0&imgtype=0&src=http%3A%2F%2Fimg.article.pchome.net%2F00%2F52%2F33%2F40%2Fpic_lib%2Fwm%2F8.jpg'
+        },
+        {
+            width: 1680,
+            height: 1200,
+            img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513420023140&di=55d3dd5e419ddf7e8501e9c210f47bd2&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201205%2F16%2F20120516125742_kC34T.jpeg'
+        }
+    ];
+    var Slider = function(opts) {
+        this.wrap = opts.dom;
+        this.list = opts.list;
+        // this.init = function() {};
+        // this.renderDom = function() {};
+        this.init();
+        this.renderDom();
+        this.bindDom();
+    }
+    Slider.prototype.bindDom = function() {};
+    Slider.prototype.init = function() {
+        this.scaleW = window.innerWidth;
+        this.scaleH = window.innerHeight;
+        this.radio = this.scaleH / this.scaleW;
+
+        this.idx = 0;
+    };
+    Slider.prototype.renderDom = function() {
+        this.outer = document.createElement('ul');
+        for (var i = 0; i < this.list.length; i++) {
+            var li = document.createElement('li');
+            var item = this.list[i];
+            li.style.width = this.scaleW;
+            li.style.transform = 'translate3d(' + (i * this.scaleW) + 'px,0,0)';
+            if (item['height'] / item['width'] > this.radio) {
+                li.innerHTML = '<img style="height:' + this.scaleH + 'px" src="' + item['img'] + '">';
+            } else {
+                li.innerHTML = '<img style="width:' + this.scaleW + 'px" src="' + item['img'] + '">';
+            }
+            this.outer.appendChild(li);
+        }
+        this.wrap.appendChild(this.outer);
+    };
+    new Slider({
+        dom: document.getElementById('canvas'),
+        list: list
+    })
+    </script>
+</body>
+
+</html>
