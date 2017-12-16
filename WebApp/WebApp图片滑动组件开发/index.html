@@ -84,12 +84,19 @@
         this.renderDom();
         this.bindDom();
     }
-    Slider.prototype.bindDom = function() {};
+    Slider.prototype.bindDom = function() {
+        var _this = this;
+        var startHandler = function(evt) {};
+        var moveHandler = function(evt) {};
+        var endHandler = function(evt) {};
+        this.wrap.addEventListener('touchstart', startHandler);
+        this.wrap.addEventListener('touchmove', moveHandler);
+        this.wrap.addEventListener('touchend', endHandler);
+    };
     Slider.prototype.init = function() {
         this.scaleW = window.innerWidth;
         this.scaleH = window.innerHeight;
         this.radio = this.scaleH / this.scaleW;
-
         this.idx = 0;
     };
     Slider.prototype.renderDom = function() {
