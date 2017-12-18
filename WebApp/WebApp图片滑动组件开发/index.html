@@ -38,6 +38,7 @@
         -webkit-box-orient: horizontal;
         -webkit-box-pack: center;
         -webkit-box-align: center;
+        -webkit-backface-visibility: hidden;
     }
 
     img {}
@@ -86,12 +87,87 @@
     }
     Slider.prototype.bindDom = function() {
         var _this = this;
-        var startHandler = function(evt) {};
-        var moveHandler = function(evt) {};
-        var endHandler = function(evt) {};
+        var startHandler = function(evt) {
+            // console.log(evt);
+            _this.startX = evt.touches[0].pageX;
+            _this.offsetX = 0;
+            _this.startTime = new Date() * 1;
+        };
+        var moveHandler = function(evt) {
+            evt.preventDefault();
+            _this.offsetX = evt.touches[0].pageX - _this.startX;
+            // 让图片随鼠标动，只需改变三张图片的translate3d属性，因为滑动一次最多能看到三张图片
+            var lis = _this.wrap.getElementsByTagName('li');
+            var i = _this.idx - 1;
+            var m = i + 3;
+            for (i; i < m; i++) {
+                if (lis[i]) {
+                    lis[i].style.transform = 'translate3d(' + ((i - _this.idx) * _this.scaleW + _this.offsetX) + 'px,0,0)';
+                    lis[i].style.transition = 'none';
+                }
+            }
+        };
+        var endHandler = function(evt) {
+            var endTime = new Date() * 1;
+            var lis = _this.wrap.getElementsByTagName('li');
+            if (endTime - _this.startTime > 800) {
+                // 慢操作
+                var boundary = _this.scaleW / 6;
+                if (_this.offsetX >= boundary) {
+                    // 进入上一页
+                    _this.go('-1');
+                } else if (_this.offsetX < -boundary) {
+                    // 进入下一页
+                    _this.go('+1');
+                } else {
+                    // 留在本页
+                    _this.go('0');
+                }
+            } else {
+                // 快操作
+                var boundary = 50;
+                if (_this.offsetX >= boundary) {
+                    // 进入上一页
+                    _this.go('-1');
+                } else if (_this.offsetX < -boundary) {
+                    // 进入下一页
+                    _this.go('+1');
+                } else {
+                    // 留在本页
+                    _this.go('0');
+                }
+            }
+        };
         this.wrap.addEventListener('touchstart', startHandler);
         this.wrap.addEventListener('touchmove', moveHandler);
         this.wrap.addEventListener('touchend', endHandler);
+    };
+    Slider.prototype.go = function(n) {
+        var idx = this.idx;
+        var cidx; // 需要去的索引值
+        var lis = this.wrap.getElementsByTagName('li');
+        var len = lis.length;
+        if (typeof n == 'number') {
+            cidx = idx;
+        } else if (typeof n == 'string') {
+            cidx = idx + n * 1;
+        }
+        if (cidx > len - 1) {
+            cidx = len - 1;
+        } else if (cidx < 0) {
+            cidx = 0;
+        }
+        this.idx = cidx;
+        lis[cidx].style.transition = 'transform 0.2s ease-out';
+        lis[cidx].style.transform = 'translate3d(0,0,0)';
+        if (lis[cidx - 1]) {
+            lis[cidx - 1].style.transition = 'transform 0.2s ease-out';
+            lis[cidx - 1].style.transform = 'translate3d(-' + this.scaleW + 'px,0,0)';
+        }
+        if (lis[cidx + 1]) {
+            lis[cidx + 1].style.transition = 'transform 0.2s ease-out';
+            lis[cidx + 1].style.transform = 'translate3d(+' + this.scaleW + 'px,0,0)';
+        }
     };
     Slider.prototype.init = function() {
         this.scaleW = window.innerWidth;
