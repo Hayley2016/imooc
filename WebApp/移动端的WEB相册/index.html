@@ -6,13 +6,150 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
     <meta name="apple-touch-fullscreen" content="YES">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="animate.css">
     <style type="text/css">
+    body,
+    html {
+        background-color: #38303d;
+        height: 100%;
+        width: 100%;
+    }
 
+    .img-list {
+        display: flex;
+        padding-bottom: 2px;
+    }
+
+    .img-list:last-child {
+        padding-bottom: 0px;
+    }
+
+    .img-item {
+        flex: 1;
+        overflow: hidden;
+        padding-left: 2px;
+    }
+
+    .img-item:first-child {
+        padding-left: 0px;
+    }
+
+    .large {
+        width: 100%;
+        height: 100%;
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
+        display: none;
+        overflow: hidden;
+    }
     </style>
 </head>
 
 <body>
+    <div id="container">
+    </div>
+    <div class="large animated fadeIn" id="large_container">
+        <img src="" id="large_img">
+    </div>
+    <script type="text/javascript" src="zepto.js v1.2.0.js"></script>
     <script type="text/javascript">
+    var imgSrc = [
+        'http://img5.imgtn.bdimg.com/it/u=4117439175,1062059118&fm=11&gp=0.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513666519434&di=b03d2926d9e42bbf1b9b4f8a8e9c2f76&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201204%2F10%2F20120410205914_kQSJa.thumb.700_0.jpeg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513666519513&di=47b3dcfd9aae4fdee5e7fbd13811e3af&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201508%2F28%2F20150828223722_WeZ4z.jpeg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513666626609&di=33c2e3f34f807258472262899bd34a87&imgtype=0&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2F201201%2F08%2F0010229ijp9bzr34tbnniu.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513666626610&di=272fea7cd37d583ed96dca666fce8bdb&imgtype=0&src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201512%2F28%2F20151228084718_QK3Hn.jpeg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513666683974&di=c4b19396a2d018b52ca7c5814a3c6c1f&imgtype=0&src=http%3A%2F%2Fp3.gexing.com%2FG1%2FM00%2F76%2F29%2FrBACE1LVEpfiXboYAACpIhA79mo980.jpg'
+    ];
+    var render = function() {
+        var html = '';
+        for (var i = 0; i < Math.ceil(imgSrc.length / 4); i++) {
+            html += '<div class="img-list">';
+            for (var j = 0; j < 4; j++) {
+                var index = 4 * i + j;
+                var src = imgSrc[index];
+                if (src) {
+                    html += '<div class="img-item animated bounceInLeft" data-index="' + index + '">' +
+                        '<canvas id="cvs_' + index + '"></canvas>' +
+                        // '<img src="'+imgSrc+'">' +
+                        '</div>';
+                    var imageObj = new Image();
+                    imageObj.index = index;
+                    imageObj.onload = function() {
+                        var cvs = $('#cvs_' + this.index)[0].getContext('2d');
+                        cvs.width = this.width;
+                        cvs.height = this.height;
+                        cvs.drawImage(this, 0, 0);
+                    }
+                    imageObj.src = src;
+                }
+            }
+            html += '</div>';
+        }
+        $('#container').html(html);
+        var imgItem = $('.img-item');
+        imgItem.css('height', imgItem.width());
+    }
+    render();
+    var loadImg = function(index, callback) {
+        var src = imgSrc[index]
+        $('#large_img').attr('src', '');
+        $('#large_container').css({
+            'display': '-webkit-box'
+        }).show();
+        $('#container').hide();
+        var imageObj = new Image();
+        imageObj.onload = function() {
+            var winWidth = $(window).width();
+            var winHeight = $(window).height();
+            if (winWidth / winHeight > this.width / this.height) {
+                $('#large_img').attr('src', src).css('height', winHeight);
+            } else {
+                $('#large_img').attr('src', src).css('width', winWidth);
+            }
+            callback && callback();
+
+        };
+        imageObj.src = src;
+    }
+    $('#container').delegate('.img-item', 'tap', function() {
+        var index = $(this).attr('data-index');
+        cid = index;
+        loadImg(index);
+    });
+    var cid;
+    $('#large_container').tap(function() {
+        $('#large_container').hide();
+        $('#container').show();
+    }).swipeLeft(function() {
+        // 左滑
+        cid++;
+        if (cid > (imgSrc.length - 1)) {
+            cid = imgSrc.length - 1;
+        } else {
+            loadImg(cid, function() {
+                $('#large_img')[0].addEventListener('webkitAnimationEnd', function() {
+                    $('#large_img').removeClass('animated bounceInRight bounceInLeft');
+                    $('#large_img')[0].removeEventListener('webkitAnimationEnd', function() {});
+                }, false);
+                $('#large_img').addClass('animated bounceInRight');
+            });
+        }
+    }).swipeRight(function() {
+        // 右滑
+        cid--;
+        if (cid < 0) {
+            cid = 0;
+        } else {
+            loadImg(cid, function() {
+                $('#large_img').removeClass('animated bounceInRight bounceInLeft');
+                $('#large_img').addClass('animated bounceInLeft');
+            });
+        }
+    })
     </script>
 </body>
 
