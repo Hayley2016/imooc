@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>图片预加载之有序加载</title>
+    <style type="text/css">
+    .box {
+        text-align: center;
+    }
+
+    img {
+        width: 500px;
+        height: 200px;
+    }
+
+    .btn {
+        display: inline-block;
+        height: 30px;
+        line-height: 30px;
+        padding: 0px 15px;
+        background-color: green;
+        color: #fff;
+        text-decoration-line: none;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <img src="http://imgsrc.baidu.com/imgad/pic/item/1b4c510fd9f9d72ab7f04821df2a2834349bbb72.jpg" id="img">
+        <p>
+            <a href="javascript:;" class="btn" data-control="prev">上一页</a>
+            <a href="javascript:;" class="btn" data-control="next">下一页</a>
+        </p>
+    </div>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="preload.js"></script>
+    <script type="text/javascript">
+    var imgSrc = [
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502790366919&di=10c4e9a4b1e709521d9221442da09a30&imgtype=0&src=http%3A%2F%2Fimg.bimg.126.net%2Fphoto%2FoM_UO94T-HaQIQLuhdULSA%3D%3D%2F5774177672242663144.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502790366917&di=75c1a6b13d3399e0a7130163ff28a555&imgtype=0&src=http%3A%2F%2Fimage.tianjimedia.com%2FuploadImages%2F2011%2F286%2FE27LF6AIAG2W.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502791298389&di=43f3475699d8d7a630591af1fe5fd7d8&imgtype=jpg&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F314e251f95cad1c80fefc1e6763e6709c83d519e.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502790366670&di=da416a832a33a9dde0b14877bafe69d9&imgtype=0&src=http%3A%2F%2Ftupian.enterdesk.com%2F2012%2F1029%2Fzyz%2F03%2F14583115_1350966109847.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502790366667&di=1bf3a6b1c5757ecf25bd75bcd7dcaa06&imgtype=0&src=http%3A%2F%2Fwww.wallcoo.com%2Fnature%2FSummer_Fantasy_Landscapes%2Fwallpapers%2F1680x1050%2FSummer_Fantasy_landscape_by_photo_manipulation_34467184.jpg'
+    ];
+    var index = 0;
+    var length = imgSrc.length;
+    // var count = 0;
+    // 有序预加载
+    // var load = function() {
+    //     var imgObj = new Image();
+    //     imgObj.onload = function() {
+    //         if (count >= length) {
+
+    //         } else {
+    //             load();
+    //         }
+    //         count++;
+    //     };
+    //     imgObj.src = imgSrc[count];
+    // };
+    // load();
+    $('.btn').on('click', function() {
+        if ($(this).attr('data-control') === 'prev') {
+            index = Math.max(0, --index);
+        } else {
+            index = Math.min(length - 1, ++index);
+        }
+        $('#img').attr('src', imgSrc[index]);
+    });
+    $.preload(imgSrc,{
+    	'order':'ordered'
+    })
+    </script>
+</body>
+
+</html>
