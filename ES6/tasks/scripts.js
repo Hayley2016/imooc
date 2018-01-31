@@ -12,7 +12,7 @@ import uglify from 'gulp-uglify';
 import { log, colors } from 'gulp-util';
 import args from './util/args.js';
 gulp.task('scripts', () => {
-    return gulp.src(['app/js/index.js'])
+    return gulp.src(['app/**/*.js'])
         .pipe(plumber({
             errorHandle: function() {}
         }))
