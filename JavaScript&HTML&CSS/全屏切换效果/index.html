@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    #container,
+    .sections,
+    .section {
+        height: 100%;
+    }
+
+    .section {
+        background-color: green;
+        background-size: cover;
+        background-position: 50% 50%;
+        text-align: center;
+        color: white;
+    }
+
+    #section0 {
+        background: url('http://imgstore.cdn.sogou.com/app/a/100540002/850349.jpg');
+    }
+
+    #section1 {
+        background: url('http://img2.niutuku.com/1312/0857/0857-niutuku.com-9908.jpg');
+    }
+
+    #section2 {
+        background: url('http://img2.niutuku.com/1312/0737/0737-niutuku.com-2789.jpg');
+    }
+
+    #section3 {
+        background: url('http://dl.bizhi.sogou.com/images/2013/12/06/436991.jpg');
+    }
+
+    .pages {
+        position: fixed;
+        list-style: none;
+    }
+
+    .vertical.pages {
+        right: 10px;
+        top: 50%;
+    }
+
+    .herizontal.pages {
+        left: 50%;
+        bottom: 10px;
+    }
+
+    .pages li {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #fff;
+        margin: 10px 5px;
+        cursor: pointer;
+    }
+
+    .herizontal.pages li {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .pages li.active {
+        width: 14px;
+        height: 14px;
+        border: 2px solid #FFFE00;
+        background: none;
+        margin-left: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="container" data-PageSwitch>
+        <div class="sections">
+            <div class="section" id="section0">
+                <h3>0</h3>
+            </div>
+            <div class="section" id="section1">
+                <h3>1</h3>
+            </div>
+            <div class="section" id="section2">
+                <h3>2</h3>
+            </div>
+            <div class="section" id="section3">
+                <h3>3</h3>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="pageswitch.js"></script>
+    <script>
+    // $('#container').PageSwitch({
+    //     index: 2
+    // });
+    </script>
+</body>
+
+</html>
