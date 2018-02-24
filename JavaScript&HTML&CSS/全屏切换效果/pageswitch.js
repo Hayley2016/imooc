@@ -16,8 +16,8 @@
             }
         }
         return false;
-    })(document.createElement(PageSwitch));
-    var PageSwitch = (function() {
+    })(document.createElement(PageSwitch1));
+    var PageSwitch1 = (function() {
         function PageSwitch(element, options) {
             // jQuery的extend方法：将用户自定义的插件参数与插件的默认参数加以合并
             // 一个好的做法是将一个新的空对象做为$.extend的第一个参数，defaults和用户传递的参数对象紧随其后，
@@ -30,6 +30,7 @@
             // 初始化dom结构，布局，分页以及绑定事件
             init: function() {
                 var me = this;
+                // 初始化参数
                 me.selectors = me.settings.selectors;
                 me.sections = $(me.selectors.sections);
                 me.section = $(me.selectors.section);
@@ -46,6 +47,7 @@
                 if (me.index) {
                     me._scrollPage(true);
                 }
+                // 初始化事件
                 me._initEvent();
             },
             // 获取滑动页面数量
@@ -177,7 +179,7 @@
             // 向下翻页
             next: function() {
                 var me = this;
-                if (me.index < me.pagesCount-1) {
+                if (me.index < me.pagesCount - 1) {
                     me.index++;
                 } else if (me.settings.loop) {
                     me.index = 0;
@@ -186,7 +188,10 @@
             }
 
         }
-        return PageSwitch;
+        return {
+            PageSwitch: PageSwitch
+        };
+        // return PageSwitch;
     })();
     // 动态方式开发插件
     $.fn.PageSwitch = function(options) {
@@ -200,7 +205,7 @@
                 // 单例模式
                 // 如果实例存在则不再重复创建实例
                 // 利用data()来存放插件对象的实例
-                instance = new PageSwitch(me, options);
+                instance = new PageSwitch1.PageSwitch(me, options); // new PageSwitch1(me, options);
                 me.data('PageSwitch', instance);
             }
             // 这样可以在插件外部调用 $('div').PageSwitch('init'); 调用插件的init方法

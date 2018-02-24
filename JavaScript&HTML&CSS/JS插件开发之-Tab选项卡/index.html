@@ -9,31 +9,91 @@
         margin: 0;
     }
 
+    ul,
+    li {
+        list-style: none;
+    }
+
     body {
         background-color: #323232;
         font-size: 12px;
         font-family: "微软雅黑";
+        padding: 100px;
+    }
+
+    .tab-view {
+        float: left;
+        margin: 5px;
     }
     </style>
+    <link rel="stylesheet" type="text/css" href="tab.css">
 </head>
 
 <body>
-    <div class="tab">
-        <ul class="tab-nav">
-            <li><a href="javascript:void(0)">新闻</a></li>
-            <li><a href="javascript:void(0)">娱乐</a></li>
-            <li><a href="javascript:void(0)">电影</a></li>
-            <li><a href="javascript:void(0)">科技</a></li>
-        </ul>
-        <div class="content-wrap">
-            <div class="content-item"></div>
-            <div class="content-item"></div>
-            <div class="content-item"></div>
-            <div class="content-item"></div>
+    <div class="tab-view">
+        <div class="tab js-tab">
+            <ul class="tab-nav">
+                <li class="actived"><a href="javascript:void(0)">新闻</a></li>
+                <li><a href="javascript:void(0)">娱乐</a></li>
+                <li><a href="javascript:void(0)">电影</a></li>
+                <li><a href="javascript:void(0)">科技</a></li>
+            </ul>
+            <div class="content-wrap">
+                <div class="content-item current"><img src="http://dl.bizhi.sogou.com/images/2014/02/18/523326.jpg"></div>
+                <div class="content-item"><img src="http://img2.niutuku.com/desk/1208/1513/ntk-1513-31894.jpg"></div>
+                <div class="content-item"><img src="http://img2.niutuku.com/desk/1207/1016/ntk123817.jpg"></div>
+                <div class="content-item"><img src="http://dl.bizhi.sogou.com/images/2013/12/06/436991.jpg"></div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-view">
+        <div class="tab js-tab" data-config='{
+            "triggerType": "click",
+            "effect": "fade",
+            "invoke": "2",
+            "auto": 2000
+        }'>
+            <ul class="tab-nav">
+                <li class="actived"><a href="javascript:void(0)">新闻</a></li>
+                <li><a href="javascript:void(0)">娱乐</a></li>
+                <li><a href="javascript:void(0)">电影</a></li>
+                <li><a href="javascript:void(0)">科技</a></li>
+            </ul>
+            <div class="content-wrap">
+                <div class="content-item current"><img src="http://dl.bizhi.sogou.com/images/2014/02/18/523326.jpg"></div>
+                <div class="content-item"><img src="http://img2.niutuku.com/desk/1208/1513/ntk-1513-31894.jpg"></div>
+                <div class="content-item"><img src="http://img2.niutuku.com/desk/1207/1016/ntk123817.jpg"></div>
+                <div class="content-item"><img src="http://dl.bizhi.sogou.com/images/2013/12/06/436991.jpg"></div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-view">
+        <div class="tab js-tab" data-config='{
+            "triggerType": "mouseover",
+            "effect": "default",
+            "auto": 2000
+        }'>
+            <ul class="tab-nav">
+                <li class="actived"><a href="javascript:void(0)">新闻</a></li>
+                <li><a href="javascript:void(0)">娱乐</a></li>
+                <li><a href="javascript:void(0)">电影</a></li>
+                <li><a href="javascript:void(0)">科技</a></li>
+            </ul>
+            <div class="content-wrap">
+                <div class="content-item current"><img src="http://dl.bizhi.sogou.com/images/2014/02/18/523326.jpg"></div>
+                <div class="content-item"><img src="http://img2.niutuku.com/desk/1208/1513/ntk-1513-31894.jpg"></div>
+                <div class="content-item"><img src="http://img2.niutuku.com/desk/1207/1016/ntk123817.jpg"></div>
+                <div class="content-item"><img src="http://dl.bizhi.sogou.com/images/2013/12/06/436991.jpg"></div>
+            </div>
         </div>
     </div>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script type="text/javascript" src="tab.js"></script>
     <script>
+    $(function() {
+        // Tab.init($('.js-tab'));
+        $('.js-tab').tab();
+    });
     </script>
 </body>
 
