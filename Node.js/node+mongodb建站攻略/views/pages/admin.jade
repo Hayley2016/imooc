@@ -1,0 +1,9 @@
+extend ../layout
+block content
+	.container
+		.row
+			form.form-horizontal()
+				.form-group
+					label.col-sm-2.control-label(for="inputTitle") 电影名称
+					.col-sm-10
+						input#inputTitle.form-control(type="text",name="movie[title]")
