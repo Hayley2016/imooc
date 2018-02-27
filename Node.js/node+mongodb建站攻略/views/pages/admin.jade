@@ -1,8 +1,26 @@
 extend ../layout
 block content
 	.container
-		form.form-horizontal()
-			.form-group.row
-				label.col-sm-4.control-label(for="inputTitle") 电影名称
-				.col-sm-6
-					input#inputTitle.form-control(type="text",name="movie[title]")
+		.row
+			form.form-horizontal(method="post",action="/admin/movie")
+				input(type="hidden",name="movie[_id]",value="#{movie._id}")
+				.form-group
+					label.col-sm-4.control-label(for="inputTitle") 电影名称
+					.col-sm-6
+						input#inputTitle.form-control(type="text",name="movie[title]",value="#{movie.title}")
+				.form-group
+					label.col-sm-4.control-label(for="inputDoctor") 导演
+					.col-sm-6
+						input#inputDoctor.form-control(type="text",name="movie[doctor]",value="#{movie.doctor}")
+				.form-group
+					label.col-sm-4.control-label(for="inputCountry") 国家
+					.col-sm-6
+						input#inputCountry.form-control(type="text",name="movie[country]",value="#{movie.country}")
+				.form-group
+					label.col-sm-4.control-label(for="inputLanguage") 语种
+					.col-sm-6
+						input#inputLanguage.form-control(type="text",name="movie[language]",value="#{movie.language}")
+				.form-group
+					label.col-sm-4.control-label(for="inputPoster") 海报
+					.col-sm-6
+						input#inputPoster.form-control(type="text",name="movie[poster]",value="#{movie.poster}")
