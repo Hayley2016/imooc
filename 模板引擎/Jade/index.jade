@@ -1,0 +1,58 @@
+extends layout
+block content
+
+	- var data = 'text';
+	- var htmlData = '<script>alert(1);</script><span>script</span>;';
+	p #{data}
+	p #{htmlData}
+	p !{htmlData}
+	p=data
+	p=htmlData
+	p!=htmlData
+	p \#{htmlData}
+	p \!{htmlData}
+	input(value=newData)
+	input(value='#{newData}')
+	block desc
+		p desc form index
+
+
+	- var imooc = {course:'jade',level:'middle6'};
+	- for (var i in imooc)
+		p=imooc[i]
+	each value, key in imooc
+		p #{key}::#{value}
+
+	mixin lesson
+		p imooc123456
+	+ lesson
+	mixin study(name, courses)
+		p #{name}
+		ul.courses
+			each course in courses
+				li #{course}
+	+ study('tom',['qq','ww'])
+	mixin group(student)
+		h4 #{student.name}
+		+ study(student.name,student.courses)
+	+ group({name:'uu',courses:['qq','ww']})
+
+
+	style.
+		body{color:red}
+	script.
+		var jade ='jade';
+		console.log(jade);
+	// h1.title#title Jade学习案例1
+	//- p(class="title1",id="xxyy")
+	//- div#class2
+		#class1
+	input(type="checkbox",checked)
+	h3 混排大段文本
+	p.
+		1<strong>11</strong>
+		2
+		3
+	p
+		|1
+		|2
