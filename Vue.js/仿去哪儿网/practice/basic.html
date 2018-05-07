@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>vue起步、vue基础精讲</title>
+    <script src="vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <!-- 插值表达式{{}} -->
+            <!-- v-text="content" -->
+            <!-- v-html="content" -->
+            <!-- 可以写js表达式 -->
+            <h2>表达式</h2>
+            <div>{{content + ' len'}}</div>
+            <div v-text="content + ' len'"></div>
+            <div v-html="content"></div>
+        </div>
+        <div>
+            <h2>计算属性computed、methods、监听watch</h2>
+            <!-- 计算属性computed -->
+            <div>{{fullName1}}</div>
+            <!-- methods -->
+            <div>{{fullName2()}}</div>
+            <!-- 监听watch -->
+            <div>{{fullName}}</div>
+        </div>
+        <div>
+            <h2>条件判断</h2>
+            <!-- vue中的条件渲染，v-show性能高一些，不会频繁将dom删除和添加，只是添加了display：none属性 -->
+            <div v-if="show === false">vue中的条件渲染1</div>
+            <!-- v-if v-else需要紧挨着编写 -->
+            <div v-else>Bye Bye</div>
+            <div v-show="show">vue中的条件渲染</div>
+        </div>
+        <div>
+            <!-- vue在渲染时会尽量复用原有的元素，可以给元素加key值，标识唯一 -->
+            <h2>key值应用场景</h2>
+            <div v-if="show">
+                用户名：
+                <input type="" name="" key="username">
+            </div>
+            <div v-else>
+                邮箱名：
+                <input type="" name="" key="email">
+            </div>
+        </div>
+        <div>
+            <h2>列表循环</h2>
+            <!-- 操作数组时需要使用vue提供的方法才能改变数组数据之后界面有所响应
+            若使用直接操作下标app.list[4]={},数组数据改变，但是并不会渲染到界面上 
+            push pop shift unshift splice sort reverse 
+            或者通过改引用，即app.list=[]-->
+            <div v-for="(item , index) of list" :key="item.id">
+                {{item.text}} ---- {{index}}
+            </div>
+            <!-- template可以帮助我们包裹一些元素，但是不会被渲染在页面上 -->
+        </div>
+        <div>
+            <h2>对象循环</h2>
+            <div v-for="(item , key , index) of userInfo">
+                {{item}} ---- {{key}} ---- {{index}}
+            </div>
+        </div>
+    </div>
+    <div>
+        <h2>不再vue实例中的数据</h2>
+        <div>{{content}}</div>
+    </div>
+    <script>
+    // var dom = document.getElementById('app')
+    // dom.innerHTML = 'hello world'
+    var app = new Vue({
+        el: '#app', // 限制了vue实例管理的内容 vue接管了#app中的内容VM层做的事情
+        data: {
+            content: '<h1>hello world2</h1>',
+            firstName: 'Wang',
+            fullName: 'Wang Haili',
+            lastName: 'Haili',
+            age: 28,
+            show: false,
+            list: [{
+                id: 121212,
+                text: 'hello'
+            }, {
+                id: 787878,
+                text: 'Lei'
+            }, {
+                id: 454545,
+                text: 'Hao'
+            }],
+            userInfo: {
+                name: 'wanghaili',
+                age: '18',
+            }
+        },
+        // 用watch跟用computed很类似，都具有缓存机制
+        watch: {
+            firstName: function() {
+                this.fullName = this.firstName + ' ' + this.lastName
+            },
+            lastName: function() {
+                this.fullName = this.firstName + ' ' + this.lastName
+            }
+        },
+        // 计算属性 有缓存机制 如果依赖的值没有改变则不会重新计算，若依赖的值发生改变则会重新计算
+        computed: {
+            fullName1: function() {
+                return this.firstName + ' ' + this.lastName
+            },
+            fullName3: {
+                get: function() {
+                    return this.firstName + ' ' + this.lastName
+                },
+                set: function(value) {
+                    var arr = value.split(' ')
+                    this.firstName = arr[0]
+                    this.lastName = arr[1]
+                }
+            }
+        },
+        methods: {
+            // 改变age属性值，methods会重新执行，和computed的缓存机制相比，性能低，能用计算属性就尽量不用methods
+            fullName2: function() {
+                return this.firstName + ' ' + this.lastName
+            }
+        }
+    })
+    // 数据改变页面就改变，解放dom操作
+    setTimeout(function() {
+        app.$data.content = '1245'
+    }, 2000)
+    console.log(app)
+    </script>
+</body>
+
+</html>

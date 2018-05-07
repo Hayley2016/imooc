@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>vue实例生命周期函数</title>
+    <script src="vue.js"></script>
+</head>
+
+<body>
+    <!-- <div id="app">hello world1</div> -->
+    <div id="app"></div>
+    <script>
+    // 生命周期函数就是vue实例在某个时间点会自动执行的函数
+    // vue生命周期函数并不是放在methods里面，而是直接定义在vue实例上面
+    var app = new Vue({
+        el: '#app',
+        data: {
+            test: 'hello world2'
+        },
+        template: '<div>{{test}}</div>',
+        beforeCreate: function() {
+            console.log('beforeCreate')
+        },
+        created: function() {
+            console.log('created')
+        },
+        beforeMount: function() { // 模板和数据结合之前
+            console.log('beforeMount', this.$el)
+        },
+        mounted: function() { // 模板和数据结合之后，即hello world被显示到页面之后
+            console.log('mounted', this.$el)
+        },
+        beforeUpdate: function() {
+            console.log('beforeUpdate')
+        },
+        updated: function() {
+            console.log('updated')
+        },
+        beforeDestroy: function() { // app.$destroy()
+            console.log('beforeDestroy')
+        },
+        destroyed: function() {
+            console.log('destroyed')
+        }
+    })
+    </script>
+</body>
+
+</html>

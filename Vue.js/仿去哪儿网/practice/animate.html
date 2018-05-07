@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>vue中的动画特效</title>
+    <script src="vue.js"></script>
+    <style>
+    .fade1-enter,
+    .fade1-leave-to {
+        opacity: 0;
+    }
+
+    .fade1-enter-active,
+    .fade1-leave-active {
+        transition: opacity 5s;
+    }
+    </style>
+    <style>
+    @keyframes bounce-in {
+        0% {
+            transform: scale(0);
+        }
+        50% {
+            transform: scale(1.5);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .fade2-enter-active {
+        transform-origin: left center;
+        animation: bounce-in 1s
+    }
+
+    .fade2-leave-active {
+        transform-origin: left center;
+        animation: bounce-in 1s reverse
+    }
+    </style>
+    <link rel="stylesheet" type="text/css" href="animate.css">
+    <script src="velocity.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <h3>Vue中CSS动画原理</h3>
+            <transition name="fade1">
+                <div v-if="show">hh</div>
+            </transition>
+            <button @click="handleClickShow">change</button>
+        </div>
+        <div>
+            <h3>在Vue中使用animation @keyframes</h3>
+            <transition name="fade2">
+                <div v-if="show">hh</div>
+            </transition>
+            <button @click="handleClickShow">change</button>
+        </div>
+        <div>
+            <h3>在Vue中使用Animate.css库</h3>
+            <!-- 通过 appear-active-class 和 appear 实现页面的初始动画 -->
+            <!-- 如何即使用 keyframes 动画，又使用 transition 动画 -->
+            <!-- 多个动画时以哪个动画的运行时长为准 -->
+            <transition :duration="{enter:5000,leave:10000}" :duration="10000" type="transition" name="fade1" appear appear-active-class="animated swing" enter-active-class="animated swing fade1-enter-active" leave-active-class="animated bounceInLeft fade1-leave-active">
+                <div v-if="show">hh</div>
+            </transition>
+            <button @click="handleClickShow">change</button>
+        </div>
+        <div>
+            <h3>Vue中的JS动画与 Velocity.js 的结合</h3>
+            <!-- @after-leave="handleAfterLeave" @leave="handleLeave" @before-leave="handleBeforeLeave" -->
+            <transition name="fade3" @after-enter="handleAfterEnter" @enter="handleEnter" @before-enter="handleBeforeEnter">
+                <div v-if="show">hh</div>
+            </transition>
+            <button @click="handleClickShow">change</button>
+        </div>
+        <div>
+            <h3>Vue中多个元素或者组件的过渡动画</h3>
+            <p>简单组件</p>
+            <transition name="fade1" mode="in-out">
+                <child-one v-if="show"></child-one>
+                <child-two v-else></child-two>
+            </transition>
+            <p>动态组件</p>
+            <transition name="fade1" mode="in-out">
+                <component :is="isChildOne"></component>
+            </transition>
+            <p>简单元素</p>
+            <transition name="fade1" mode="in-out">
+                <div v-if="show" key="hh">hh</div>
+                <div v-else key="xx">xx</div>
+            </transition>
+            <button @click="handleClickShow">change</button>
+        </div>
+    </div>
+    <script>
+    Vue.component('child-one', {
+        template: '<div>child-one</div>'
+    })
+    Vue.component('child-two', {
+        template: '<div>child-two</div>'
+    })
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            show: true,
+            isChildOne: 'child-one'
+        },
+        methods: {
+            handleClickShow: function() {
+                this.show = !this.show
+                this.isChildOne = this.isChildOne === 'child-one' ? 'child-two' : 'child-one'
+            },
+            handleBeforeEnter: function(el) {
+                // el.style.color = 'red'
+                el.style.opacity = 0
+            },
+            handleEnter: function(el, done) {
+                // setTimeout(() => {
+                //     el.style.color = 'green'
+                // }, 2000)
+                // setTimeout(() => {
+                //     done()
+                // }, 4000)
+                Velocity(el, { opacity: 1 }, { duration: 1000 }, { complete: done() })
+            },
+            handleAfterEnter: function(el) {
+                // el.style.color = '#000'
+                console.log('动画结束')
+            }
+        }
+    })
+    </script>
+</body>
+
+</html>

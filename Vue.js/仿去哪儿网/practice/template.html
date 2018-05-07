@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>组件使用中的细节</title>
+    <script src="vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <h2>table ul ol select这类标签嵌套组件时有bug，可用is属性解决</h2>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>22</td>
+                        <td>33</td>
+                        <td>44</td>
+                    </tr>
+                    <tr is="row1"></tr>
+                    <row1></row1>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h2>在子组件中定义data必须是函数，不能是对象</h2>
+            <table>
+                <tbody>
+                    <tr is="row2"></tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h2>vue中操作dom，使用ref引用的方式</h2>
+            <h2>若ref是写在div上，则this.refs.demo获得的是对应dom元素</h2>
+            <div ref="click" @click="handleClick">click me</div>
+        </div>
+        <div>
+            <h2>计数器功能，点击+1</h2>
+            <h2>若ref是写在组件上，则this.refs.demo获得的是对应组件的引用</h2>
+            <counter :basenum="12" ref="counter1" @add-count="addCountHandle"></counter>
+            <counter :basenum="13" ref="counter2" @add-count="addCountHandle"></counter>
+            <div>total：{{total}}</div>
+        </div>
+        <div>
+            <h2>组件参数校验与非Props特性</h2>
+        </div>
+        <div>
+            <h2>给组件绑定原生事件</h2>
+            <counter @click.native="addCountHandle"></counter>
+        </div>
+        <div>
+            <h2>非父子组件传值，若借鉴父子组件传值的方式代码会很复杂，可以借助vue官方推荐的vuex或者总线机制（Bus / 总线 / 发布订阅模式 / 观察者模式）</h2>
+            <child content="Dell"></child>
+            <child content="Len"></child>
+        </div>
+        <div>
+            <h2>插槽slot，父组件可以向子组件传递dom元素，子组件也可以方便使用</h2>
+            <child content="content">
+                <!-- 具名插槽 -->
+                <div slot="header">header</div>
+                <div slot="footer">footer</div>
+            </child>
+        </div>
+        <div>
+            <h2>作用域插槽</h2>
+            <slot-self>
+                <template slot-scope="props">
+                    <h5>{{props.item2}}</h5>
+                </template>
+            </slot-self>
+        </div>
+        <div>
+            <h2>动态组件与v-once指令</h2>
+            <!-- 动态组件 -->
+            <component :is="isChildOne"></component>
+            <!-- <child-one v-if="isChildOne === 'child-one'"></child-one>
+            <child-two v-if="isChildOne === 'child-two'"></child-two> -->
+            <button @click="handleChildOneClick">change</button>
+        </div>
+    </div>
+    <script>
+    // 组件切换的时候经历了被销毁再被创建的过程，使用v-once指令组件创建之后被放进缓存 不会被销毁 可以提高性能 提高静态组件的展示效率
+    // 动态组件与v-once指令 
+    Vue.component('child-one', {
+        template: '<div v-once>child-one</div>'
+    })
+    Vue.component('child-two', {
+        template: '<div v-once>child-two</div>'
+    })
+    // 作用域插槽
+    Vue.component('slotSelf', {
+        data: function() {
+            return {
+                list: [1, 2, 3, 4]
+            }
+        },
+        template: `<div>
+				        <ul>
+					        <slot v-for="item of list" :item2=item></slot>
+				        </ul>
+			        </div>`
+    })
+    // （Bus / 总线 / 发布订阅模式 / 观察者模式） 解决非父子组件之间传值问题
+    Vue.prototype.bus = new Vue()
+    Vue.component('child', {
+        props: {
+            content: String
+        },
+        data: function() {
+            return {
+                contentData: this.content
+            }
+        },
+        template: '<div @click="handleClick"><slot name="header"></slot>{{contentData}}<slot name="footer"></slot></div>',
+        methods: {
+            handleClick: function() {
+                this.bus.$emit('change', this.contentData)
+            }
+        },
+        mounted: function() {
+            var that = this
+            this.bus.$on('change', function(msg) {
+                that.contentData = msg
+            })
+        }
+    })
+    Vue.component('counter', {
+        props: ['basenum'],
+        // // 组件参数校验
+        // props: {
+        //     basenum: Number,
+        //     basenum: [Number, String],
+        //     basenum: {
+        //         type: String,
+        //         required: true,
+        //         default: 'default value',
+        //         validator: function(value) {
+        //             return (value.length > 5)
+        //         }
+        //     }
+        // },
+        template: '<div @click="handleCountClick">{{number}} --- <span>{{basenum}}</span></div>',
+        data: function() {
+            return {
+                number: 0,
+                // 父组件传递给子组件的数据，子组件不能直接改变，需要复制一份数据再做改变，
+                // 单项数据流
+                number2: this.basenum
+            }
+        },
+        methods: {
+            handleCountClick: function() {
+                this.number++;
+                this.$emit('add-count')
+            }
+        }
+    })
+    Vue.component('row1', {
+        template: '<tr><td>111</td><td>222</td><td>333</td><td>444</td></tr>'
+    })
+    Vue.component('row2', {
+        data: function() {
+            return {
+                content: 'this is content'
+            }
+        },
+        /*data: {
+            content: 'this is content'
+        },*/
+        template: '<tr><td>{{content}}</td></tr>'
+    })
+    var app = new Vue({
+        el: '#app',
+        methods: {
+            handleClick: function() {
+                this.$refs.click.innerHTML = 'ref'
+                // console.log(this.$refs.click)
+            },
+            addCountHandle: function() {
+                var $refs = this.$refs
+                this.total = Number($refs.counter1.number) + Number($refs.counter2.number)
+            },
+            handleChildOneClick: function() {
+                this.isChildOne = this.isChildOne === 'child-one' ? 'child-two' : 'child-one'
+            }
+        },
+        data: {
+            total: 0,
+            isChildOne: 'child-one'
+        }
+    })
+    </script>
+</body>
+
+</html>
