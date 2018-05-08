@@ -2,16 +2,18 @@
   <div class="">
     <div class="recommend-title">热销推荐</div>
     <ul>
-      <li class="item border-bottom" v-for="item of recommendList" :key="item.id">
-        <div class="item-img-wrapper">
-          <img :src="item.imgUrl" class="item-img">
-        </div>
-        <div class="item-info-wrapper">
-          <p class="item-title">{{item.title}}</p>
-          <p class="item-desc">{{item.desc}}</p>
-          <button class="item-button">查看详情</button>
-        </div>
-      </li>
+      <!-- <router-link to="/detail"> -->
+        <router-link tag="li" to="/detail/"+item.id+"" class="item border-bottom" v-for="item of recommendList" :key="item.id">
+          <div class="item-img-wrapper">
+            <img :src="item.imgUrl" class="item-img">
+          </div>
+          <div class="item-info-wrapper">
+            <p class="item-title">{{item.title}}</p>
+            <p class="item-desc">{{item.desc}}</p>
+            <button class="item-button">查看详情</button>
+          </div>
+        </router-link>
+      <!-- </router-link> -->
     </ul>
   </div>
 </template>
@@ -19,20 +21,11 @@
 <script>
 export default {
   name: 'HomeRecommend',
+  props: {
+    recommendList: Array
+  },
   data: function () {
-    return {
-      recommendList: [{
-        id: '0001',
-        imgUrl: 'http://img1.qunarzz.com/sight/p0/1804/3c/3c1d865ea3175504a3.img.jpg_200x200_8844d692.jpg',
-        title: '“最忆是杭州”- G20峰会特别版《印象西湖》',
-        desc: '👍小伙伴们都收藏了，去看看吧~'
-      }, {
-        id: '0002',
-        imgUrl: 'http://img1.qunarzz.com/sight/p0/201406/24/e2a5766e6e81793b2b518a7a08812a4a.jpg_200x200_66ce1370.jpg',
-        title: '“西溪国家湿地公园',
-        desc: '帅的人都去过了😎，你还等什么~'
-      }]
-    }
+    return {}
   }
 }
 

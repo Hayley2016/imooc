@@ -2,12 +2,21 @@
   <div class="header">
     <div class="header-left"><div class="iconfont icon-back">&#xe63f;</div></div>
     <div class="header-input"><span class="iconfont">&#xe62a;</span>输入城市 / 景点 / 游玩主题</div>
-    <div class="header-right">城市<span class="iconfont icon-arrow">&#xe64a;</span></div>
+    <router-link to="/city">
+      <div class="header-right"><!-- main.js中注册了store，全局可以使用 --><!-- {{city}} -->{{city}}<span class="iconfont icon-arrow">&#xe64a;</span></div>
+    </router-link>
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: 'HomeHeader'
+  name: 'HomeHeader',
+  computed: {
+    ...mapState(['city'])
+  }
+  // props: {
+  //   city: String
+  // }
 }
 
 </script>
@@ -16,13 +25,13 @@ export default {
 /* scoped关键字使样式只作用域当前组件 */
 .header
   display: flex
-  height: .86rem
-  line-height: .86rem
+  height: $headerHeight
+  line-height: $headerHeight
   background: $bgColor
   color: #fff
   .header-left
     width: .64rem
-    float: left
+    // float: left
     .icon-back
       text-align: center
   .header-input
@@ -36,9 +45,11 @@ export default {
     color: #ccc
     padding-left: .2rem
   .header-right
-    width: 1.24rem
+    min-width: 1.00rem
+    padding: 0 .1rem
     float: right
     text-align: center
+    color: #fff
     .icon-arrow
       font-size: .24rem
       margin-left: .05rem
