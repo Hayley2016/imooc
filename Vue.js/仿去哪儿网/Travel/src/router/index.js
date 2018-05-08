@@ -24,5 +24,8 @@ export default new Router({
     path: '/list',
     name: 'List',
     component: List
-  }]
+  }],
+  scrollBehavior: function (to, from, savedPosition) {
+    return savedPosition || { x: 0, y: 0 }
+  }
 })

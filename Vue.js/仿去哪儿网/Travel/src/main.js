@@ -16,6 +16,8 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 // 引入vuex
 import store from './store/index.js'
+// babel-polyfill的引用和使用 解决ie9和一些低版本的高级浏览器对es6新语法并不支持
+import 'babel-polyfill'
 
 Vue.config.productionTip = false
 fastClick.attach(document.body)

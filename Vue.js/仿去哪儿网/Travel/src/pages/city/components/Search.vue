@@ -43,6 +43,9 @@ export default {
       this.$router.push('/')
     }
   },
+  activated () {
+    this.keyword = ''
+  },
   watch: {
     keyword () {
       if (this.timer) {

@@ -1,0 +1,25 @@
+{
+  "ret": true,
+  "data": {
+    "sightName": "“最忆是杭州”- G20峰会特别版《印象西湖》",
+    "bannerImg": "http://img1.qunarzz.com/sight/p0/201309/25/70861ec73578fb80c8d65eac.jpg_r_800x800_416d24ca.jpg",
+    "gallaryImgs": ["http://img1.qunarzz.com/sight/p0/201309/25/70861ec73578fb80c8d65eac.jpg_r_800x800_416d24ca.jpg", "http://img1.qunarzz.com/sight/p0/1709/c8/c82f5b653240b1aca3.img.jpg_r_800x800_70537d4a.jpg"],
+    "categoryList": [{
+        "title": "成人票",
+        "children": [{
+          "title": "成人三馆联票",
+          "children": [{
+            "title": "成人三馆联票 - 某一连锁店销售"
+          }]
+        },{
+          "title": "成人五馆联票"
+        }]
+      }, {
+        "title": "学生票"
+      }, {
+        "title": "儿童票"
+      }, {
+        "title": "特惠票"
+      }]
+  }
+}
