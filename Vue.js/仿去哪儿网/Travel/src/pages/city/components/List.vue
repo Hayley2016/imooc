@@ -59,6 +59,7 @@ export default {
       this.changeCity(city)
       // 适用同步
       // this.$store.commit('changeCity', city)
+      console.log(this.$router)
       this.$router.push('/')
     },
     ...mapMutations(['changeCity'])
