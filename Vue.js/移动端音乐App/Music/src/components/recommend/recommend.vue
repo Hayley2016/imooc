@@ -1,37 +1,56 @@
 <template>
   <div>
     <div class="recommend">
-      <div class="recommend-content">
-        <div class="slider-wrapper" v-if="slider.length">
-          <slider>
-            <div v-for = "item of slider" :key="item.id">
-              <a :href = "item.linkUrl">
-                <img :src = "item.picUrl"/>
-              </a>
-            </div>
-          </slider>
+      <scroll ref="scroll" class="recommend-content" :data="distList">
+        <div>
+          <div class="slider-wrapper" v-if="slider.length">
+            <slider>
+              <div v-for = "item of slider" :key="item.id">
+                <a :href = "item.linkUrl">
+                  <img class="needsclick" :src = "item.picUrl" @load="loadImage"/>
+                </a>
+              </div>
+            </slider>
+          </div>
+          <div class="recommend-list">
+            <h1 class="list-title">热门歌单推荐</h1>
+            <ul>
+              <li class="item" v-for="(item) of distList" :key="item.listennum">
+                <div class="icon">
+                  <img width="60" height="60" v-lazy="item.imgurl" />
+                </div>
+                <div class="text">
+                  <h2 class="name" v-html="item.creator.name"></h2>
+                  <p class="desc">{{item.dissname}}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="recommend-list">
-          <h1 class="list-title">热门歌单推荐</h1>
-          <ul></ul>
+        <div class="loading-container" v-if="!distList.length">
+          <loading></loading>
         </div>
-      </div>
+      </scroll>
     </div>
   </div>
 </template>
 
 <script>
 import Slider from 'base/slider/slider.vue'
+import Scroll from 'base/scroll/scroll.vue'
+import Loading from 'base/loading/loading.vue'
 import {getRecommend, getDiscList} from 'api/recommend'
 import {ERR_OK} from 'api/config.js'
 export default {
   components: {
-    Slider
+    Slider,
+    Scroll,
+    Loading
   },
   data () {
     return {
       slider: [],
-      list: []
+      distList: []
     }
   },
   mounted: function () {},
@@ -40,22 +59,28 @@ export default {
     this._getDiscList()
   },
   methods: {
+    loadImage () {
+      if (!this.checkloaded) {
+        this.checkloaded = true
+        this.$refs.scroll.refresh()
+      }
+    },
     _getRecommend () {
       getRecommend().then((res) => {
         if (res.code === ERR_OK) {
           const data = res.data
           this.slider = data.slider
-          console.log(res.data)
+          // console.log(res.data)
         }
       })
     },
     _getDiscList () {
       getDiscList().then((res) => {
-        console.log(res)
+        // console.log(res)
         if (res.code === ERR_OK) {
           const data = res.data
-          this.list = data.list
-          console.log(res.data)
+          this.distList = data.list
+          // console.log(res.data)
         }
       })
     }
@@ -77,6 +102,8 @@ export default {
       position: relative
       width: 100%
       overflow: hidden
+      height: 0
+      padding-bottom: 40%
     .recommend-list
       .list-title
         height: 65px

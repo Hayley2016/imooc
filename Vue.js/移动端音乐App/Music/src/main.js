@@ -7,9 +7,14 @@ import 'common/stylus/index.styl'
 import 'babel-polyfill'
 // 300毫秒点击延迟解决方案
 import fastClick from 'fastclick'
+// 图片懒加载技术
+import VueLazyLoad from 'vue-lazyload'
 
 Vue.config.productionTip = false
 fastClick.attach(document.body)
+Vue.use(VueLazyLoad, {
+  loading: require('common/image/default.png')
+})
 
 /* eslint-disable no-new */
 new Vue({
