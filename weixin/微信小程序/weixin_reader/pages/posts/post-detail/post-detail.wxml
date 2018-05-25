@@ -1,6 +1,6 @@
 <!--post-detail.wxml-->
 <view class="container">
-  <image class="head-image" src="{{isPlay?postData.music.coverImg:postData.headImgSrc}}"></image>
+   <image class="head-image" src="{{isPlay?postData.music.coverImg:postData.headImgSrc}}"></image>
   <image catchtap="onMusicTap" class="music" src="{{isPlay?'/images/icon/icon1.png':'/images/icon/icon2.png'}}"></image>
   <view class="author-data">
     <image class="avatar" src="/images/avatar.jpg"></image>
@@ -17,5 +17,5 @@
     </view>
     <view class="line"></view>
   </view>
-  <text class="content">{{postData.detail}}</text>
+  <text class="content">{{postData.detail}}</text> 
 </view>

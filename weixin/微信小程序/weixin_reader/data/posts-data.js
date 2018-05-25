@@ -27,12 +27,12 @@ var local_database = [
     content: '微信公众平台,给个人、企业和组织提供业务服务与用户管理能力的全新服务平台 - 百度快照 - 608条评价',
     reading: '92',
     collection: '185',
-    detail: '1111111111111111111111111111111111电视剧爱奇艺电视剧频道,是国内唯一正版高清电视剧汇聚地,致力于构建海量高清电电影爱奇艺电',
+    detail: '221111111111111111111111111111111111电视剧爱奇艺电视剧频道,是国内唯一正版高清电视剧汇聚地,致力于构建海量高清电电影爱奇艺电',
     dataTime: '24小时前',
     author: '深白色',
     headImgSrc: '/images/avatar.jpg',
     music: {
-      url: 'http://ws.stream.qqmusic.qq.com/C100004HLusI2lLjZy.m4a?fromtag=38',
+      url: 'http://ws.stream.qqmusic.qq.com/C100003GdCmG4NkEOR.m4a?fromtag=38',
       title: 'haha',
       coverImg: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2998952575,515779096&fm=26&gp=0.jpg'
     },
@@ -51,7 +51,7 @@ var local_database = [
     author: '深白色',
     headImgSrc: '/images/avatar.jpg',
     music: {
-      url: 'http://ws.stream.qqmusic.qq.com/C100002mWVx72p8Ugp.m4a?fromtag=38',
+      url: 'http://ws.stream.qqmusic.qq.com/C100003GdCmG4NkEOR.m4a?fromtag=38',
       title: 'haha',
       coverImg: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2364877932,4038548300&fm=26&gp=0.jpg'
     },
@@ -70,7 +70,7 @@ var local_database = [
     author: '深白色',
     headImgSrc: '/images/avatar.jpg',
     music: {
-      url: 'http://ws.stream.qqmusic.qq.com/C100000Zn0vS4fKKo8.m4a?fromtag=38',
+      url: 'http://ws.stream.qqmusic.qq.com/C100003GdCmG4NkEOR.m4a?fromtag=38',
       title: 'haha',
       coverImg: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=867763555,3368538948&fm=200&gp=0.jpg'
     },

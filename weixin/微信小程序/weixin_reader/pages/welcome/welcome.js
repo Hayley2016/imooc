@@ -6,7 +6,7 @@ Page({
     // wx.navigateTo({
     //   url: '../posts/post'
     // });
-    wx.redirectTo({
+    wx.reLaunch({
       url: '../posts/post',
     })
   },

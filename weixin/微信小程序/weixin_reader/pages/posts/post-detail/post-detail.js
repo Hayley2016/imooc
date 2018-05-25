@@ -1,4 +1,4 @@
-var postsData = require('../../data/posts-data.js');
+var postsData = require('../../../data/posts-data.js');
 var app=getApp();
 // post-detail.js
 Page({
@@ -33,7 +33,8 @@ Page({
     wx.showToast({
       title: collected == false ? '收藏成功' : '取消成功',
       duration: 1000,
-      icon: 'success'
+      icon: 'success',
+      image: '/images/avatar.jpg'
     });
   },
   onShareTap: function (event) {
@@ -97,6 +98,13 @@ Page({
       app.globalData.g_currentId = postId;
     })
     wx.onBackgroundAudioPause(function () {
+      that.setData({
+        isPlay: false
+      })
+      app.globalData.g_isplay = false;
+      app.globalData.g_currentId = null;
+    })
+    wx.onBackgroundAudioStop(function () {
       that.setData({
         isPlay: false
       })

@@ -1,15 +1,19 @@
 {
   "pages": [
-    "pages/posts/post",
+    "pages/movies/movies",
     "pages/welcome/welcome",
-    "pages/post-detail/post-detail",
-    "pages/movies/movies"
+    "pages/posts/post",
+    "pages/posts/post-detail/post-detail",
+    "pages/movies/movies-detail/movies-detail",
+    "pages/movies/more-movies/more-movies"
   ],
   "window": {
     "navigationBarBackgroundColor": "#1AAD16"
   },
   "tabBar": {
     "borderStyle": "white",
+    "position": "bottom",
+    "selectedColor": "green",
     "list": [
       {
         "pagePath": "pages/posts/post",
