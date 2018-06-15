@@ -9,14 +9,13 @@ config.dev = !(process.env === 'production')
 const r = path => resolve(__dirname, path)
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
-const MIDDLEWARES = ['router']
+const MIDDLEWARES = ['database', 'router']
 class Server {
   constructor() {
     this.app = new Koa()
     this.useMiddleWares(this.app)(MIDDLEWARES)
   }
   useMiddleWares(app) {
-    console.log('pp')
     return R.map(R.compose(
       R.map(i => i(app)),
       require,

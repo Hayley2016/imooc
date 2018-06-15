@@ -1,29 +1,18 @@
 import Router from 'koa-router'
-import sha1 from 'sha1'
+import { resolve } from 'path'
 import config from '../config/index.js'
+import reply from '../wechat/reply.js'
+import wechatMiddle from '../wechat-lib/middleware.js'
+import { signature } from '../controllers/wechat.js'
 export const router = app => {
   const router = new Router()
-  console.log(config)
-  router.get('/wechat-hear', (ctx, next) => {
-    const token = config.wechat.token
-    const {
-      signature,
-      nonce,
-      timestamp,
-      echostr
-    } = ctx.query
-    const str = [token, timestamp, nonce].sort().join('')
-    const sha = sha1(str)
-    console.log(sha === signature, sha, signature)
-    if (sha === signature) {
-      ctx.body = echostr
-    } else {
-      ctx.body = 'failed'
-    }
-  })
-  // router.post('/wechat-hear', (ctx, next) {
-
+  router.all('/wechat-hear', wechatMiddle(config.wechat, reply))
+  router.all('/wechat-signature', signature)
+  // 测试微信素材接口
+  // router.get('/upload', async(ctx, next) => {
+  //   let mp = require('../wechat/index.js')
+  //   let wechat = mp.getWechat()
+  //   await wechat.handle('uploadMaterial', 'pic', resolve(__dirname, '../../static/img/logo.png'))
   // })
-  app.use(router.routes())
-  app.use(router.allowedMethods())
+  app.use(router.routes()).use(router.allowedMethods())
 }

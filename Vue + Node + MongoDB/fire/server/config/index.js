@@ -1,7 +1,8 @@
 export default {
   wechat: {
-  	appId:'wxaf1157dd53eb7889',
-  	appsecret:'c32e16ebd9745bf5c8379ef9fcb7cf78',
-    token: 'qwertyuiop1234'
-  }
+  	appID:'wx7d40804a6b10949c',
+  	appSecret:'8ff4dc0ca54b738b7256567f368fc23b',
+    token: 'qwertyuiop123'
+  },
+  db:'mongodb://localhost/fire'
 }
