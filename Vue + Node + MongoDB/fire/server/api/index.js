@@ -1,4 +1,6 @@
-import { getSignatureAsync } from './wechat.js'
+import { getSignatureAsync, getAuthorizeURL, getUserByCode } from './wechat.js'
 export {
-  getSignatureAsync
+  getSignatureAsync,
+  getAuthorizeURL,
+  getUserByCode
 }

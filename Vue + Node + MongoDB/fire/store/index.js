@@ -4,7 +4,18 @@ import actions from './actions'
 import mutations from './mutations'
 const createStore = () => {
   return new Vuex.Store({
-    state: {},
+    state: {
+      products: [],
+      focusProduct: {},
+      houses: [],
+      focusHouse: {},
+      characters: [],
+      focusCharacter: {},
+      cities: [],
+      authUser: {},
+      imageCDN: '',
+      payments: []
+    },
     getters,
     actions,
     mutations

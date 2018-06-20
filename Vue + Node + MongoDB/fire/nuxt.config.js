@@ -1,7 +1,7 @@
 module.exports = {
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     title: 'starter',
     meta: [
@@ -12,17 +12,29 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
-    scripts:[{
-      src:'http://res.wx.qq.com/open/js/jweixin-1.2.0.js'
+    script: [{
+      // scripts里面的脚本都会被加载到页面的head里面
+      src: 'http://res.wx.qq.com/open/js/jweixin-1.2.0.js'
     }]
   },
   /*
-  ** Global CSS
-  */
-  css: ['~static/css/main.css'],
+   ** Global CSS
+   */
+  css: [{
+      src: 'static/sass/base.sass',
+      lang: 'sass?indentedSyntax=true'
+    },
+    {
+      src: 'swiper/dist/css/swiper.css'
+    }
+  ],
+  plugins: [
+    { src: '~plugins/swiper.js', ssr: false },
+    { src: '~plugins/flexible.js', ssr: false }
+  ],
   /*
-  ** Customize the progress-bar color
-  */
+   ** Customize the progress-bar color
+   */
   loading: { color: '#3B8070' },
   /*
    ** Build configuration
@@ -31,7 +43,7 @@ module.exports = {
     /*
      ** Run ESLINT on save
      */
-    extend (config, ctx) {
+    extend(config, ctx) {
       if (ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',

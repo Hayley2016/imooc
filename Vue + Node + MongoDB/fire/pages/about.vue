@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <img src="../static/img/logo.png" alt="Nuxt.js Logo" class="logo" />
+    <img src="../static/images/logo.png" alt="Nuxt.js Logo" class="logo" />
     <!-- <h1 class="title">
       This page is loaded from the {{ name }}
     </h1>
@@ -25,10 +25,13 @@ export default {
       title: `测试页面`
     }
   },
-  beforeMount () {
+  computed: {
+    ...mapState(['baseUrl'])
+  },
+  beforeMount() {
     const wx = window.wx // 拿到全局的sdk对象
     const url = window.location.href
-    this.$store.dispatch('getWechatSignature', url)
+    this.$store.dispatch('getWechatSignature', encodeURIComponent(url))
     .then(res => {
       if (res.data.success) {
         const params = res.data.params

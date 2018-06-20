@@ -1,11 +1,11 @@
-const { resolve } = require('path')
+// const { resolve } = require('path')
 // const r = path => resolve(__dirname, path)
 
 require('babel-core/register')({
   'presets': [
     'stage-3',
     'latest-node'
-  ],
+  ]
   // 'plugins': [
   //   'transform-decorators-legacy',
   //   ['module-alias', [
@@ -16,4 +16,4 @@ require('babel-core/register')({
 })
 
 require('babel-polyfill')
-require('./server')
+require('./server/crawler/api')

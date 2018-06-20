@@ -88,13 +88,14 @@ function raw(args) {
 
   keys = keys.sort()
   keys.forEach((key) => {
+    // toLowerCase 方法用于把字符串转换为小写。
     newArgs[key.toLowerCase()] = args[key]
   })
 
   for (let k in newArgs) {
     str += '&' + k + '=' + newArgs[k]
   }
-
+  // substr() 方法可在字符串中抽取从 start 下标开始的指定数目的字符。
   return str.substr(1)
 }
 
@@ -113,8 +114,8 @@ function signIt(nonce, ticket, timestamp, url) {
 }
 
 function sign(ticket, url) {
-  const nonce = createNonce()
-  const timestamp = createTimestamp()
+  const nonce = createNonce() // 随机字符串
+  const timestamp = createTimestamp() // 时间戳
   const signature = signIt(nonce, ticket, timestamp, url)
 
   return {

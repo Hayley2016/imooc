@@ -75,11 +75,11 @@ export class Wechat {
     }
   }
   // 获得Ticket票据
-  async fetchTicket() {
+  async fetchTicket(token) {
 
     let data = await this.getTicket()
     if (!this.isValidToken(data, 'ticket')) {
-      data = await this.updateTicket()
+      data = await this.updateTicket(token)
     }
     await this.saveTicket(data)
     return data
